@@ -16,8 +16,9 @@ namespace Wrapper
 
         public MainForm(string wrapped)
         {
-            this.wrapped = wrapped;
             InitializeComponent();
+            this.wrapped = wrapped;
+            this.Text = wrapped;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -55,7 +56,8 @@ namespace Wrapper
 
         private void Process_Exited(object sender, EventArgs e)
         {
-            UpdateOutputTextBox($"[Process terminated with exit code {process.ExitCode}.]");
+            UpdateOutputTextBox($"[Proces beëindigd met code {process.ExitCode}.]");
+            this.BeginInvoke((MethodInvoker) delegate() { this.Text += " [Gereed]"; });
         }
 
         private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
@@ -64,7 +66,7 @@ namespace Wrapper
             if (!string.IsNullOrEmpty(e.Data))
             {
                 // Update the GUI with the output
-                UpdateOutputTextBox("[O] " + e.Data);
+                UpdateOutputTextBox(e.Data);
             }
         }
 
