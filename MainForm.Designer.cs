@@ -40,7 +40,7 @@
             this.panel.Controls.Add(this.btnClose);
             this.panel.Controls.Add(this.btnCopy);
             this.panel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel.Location = new System.Drawing.Point(632, 0);
+            this.panel.Location = new System.Drawing.Point(682, 0);
             this.panel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel.Name = "panel";
             this.panel.Padding = new System.Windows.Forms.Padding(5, 2, 5, 2);
@@ -76,13 +76,14 @@
             this.txtOutput.BackColor = System.Drawing.Color.White;
             this.txtOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtOutput.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtOutput.HideSelection = false;
             this.txtOutput.Location = new System.Drawing.Point(0, 0);
             this.txtOutput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.ReadOnly = true;
             this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtOutput.Size = new System.Drawing.Size(632, 453);
+            this.txtOutput.Size = new System.Drawing.Size(682, 453);
             this.txtOutput.TabIndex = 0;
             this.txtOutput.WordWrap = false;
             // 
@@ -91,7 +92,7 @@
             this.AcceptButton = this.btnClose;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(732, 453);
+            this.ClientSize = new System.Drawing.Size(782, 453);
             this.Controls.Add(this.txtOutput);
             this.Controls.Add(this.panel);
             this.Margin = new System.Windows.Forms.Padding(4);

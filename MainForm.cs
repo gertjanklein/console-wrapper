@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Wrapper
 {
     public partial class MainForm : Form
     {
+        // The full path to the program to call
+        private readonly string wrapped;
+        // The process instance for the wrapped program
         private Process process;
 
-        public MainForm()
+        public MainForm(string wrapped)
         {
+            this.wrapped = wrapped;
             InitializeComponent();
         }
 
@@ -18,29 +24,38 @@ namespace Wrapper
         {
             // Create the process instance
             process = new Process();
-            
-            // Use Python program to check stdout/stderr
-            process.StartInfo.FileName = "py";
-            string[] args = { "../../hello.py" };
+
+            // Run program in cmd shell to redirect stderr to stdout
+            process.StartInfo.FileName = "cmd";
+            string[] args = { "/c", wrapped };
+            // Add any parameters we've been given
             args = args.Concat(Environment.GetCommandLineArgs().Skip(1)).ToArray();
+            // Add redirect
+            args = args.Append("2>&1").ToArray();
             process.StartInfo.Arguments = string.Join(" ", args);
 
             // Redirect the standard output and error streams
             process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.CreateNoWindow = true;
+            process.EnableRaisingEvents = true;
 
-            // Set up event handlers for capturing output
-            process.ErrorDataReceived += Process_ErrorDataReceived;
+            // Set up event handler for capturing output
             process.OutputDataReceived += Process_OutputDataReceived;
 
             // Start the process
             process.Start();
 
-            // Start asynchronous reading of the output and error streams
+            // Start asynchronous reading of the output stream
             process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
+
+            // Ask to be notified when wrapped program exits
+            process.Exited += Process_Exited;
+        }
+
+        private void Process_Exited(object sender, EventArgs e)
+        {
+            UpdateOutputTextBox($"[Process terminated with exit code {process.ExitCode}.]");
         }
 
         private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
@@ -50,16 +65,6 @@ namespace Wrapper
             {
                 // Update the GUI with the output
                 UpdateOutputTextBox("[O] " + e.Data);
-            }
-        }
-
-        private void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            // Handle error data received from the console application
-            if (!string.IsNullOrEmpty(e.Data))
-            {
-                // Update the GUI with the error
-                UpdateOutputTextBox("[E] " + e.Data);
             }
         }
 
@@ -80,7 +85,7 @@ namespace Wrapper
         {
             // Clean up resources when the form is closing
             process.OutputDataReceived -= Process_OutputDataReceived;
-            process.ErrorDataReceived -= Process_ErrorDataReceived;
+            process.Exited -= Process_Exited;
             process.Close();
         }
 
