@@ -48,7 +48,7 @@
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.ReadOnly = true;
             this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtOutput.Size = new System.Drawing.Size(666, 551);
+            this.txtOutput.Size = new System.Drawing.Size(716, 537);
             this.txtOutput.TabIndex = 0;
             this.txtOutput.WordWrap = false;
             // 
@@ -60,7 +60,7 @@
             this.panel.Controls.Add(this.btnRerun, 0, 1);
             this.panel.Controls.Add(this.btnClose, 0, 2);
             this.panel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel.Location = new System.Drawing.Point(674, 8);
+            this.panel.Location = new System.Drawing.Point(724, 8);
             this.panel.Margin = new System.Windows.Forms.Padding(0);
             this.panel.Name = "panel";
             this.panel.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
@@ -69,7 +69,7 @@
             this.panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.panel.Size = new System.Drawing.Size(100, 551);
+            this.panel.Size = new System.Drawing.Size(100, 537);
             this.panel.TabIndex = 4;
             // 
             // btnCopy
@@ -116,12 +116,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(782, 567);
+            this.ClientSize = new System.Drawing.Size(832, 553);
             this.Controls.Add(this.txtOutput);
             this.Controls.Add(this.panel);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.MinimumSize = new System.Drawing.Size(234, 128);
+            this.MinimumSize = new System.Drawing.Size(240, 210);
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(8);
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
