@@ -18,46 +18,11 @@ namespace Wrapper
         {
             InitializeComponent();
             this.wrapped = wrapped;
-            this.Text = wrapped;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // Create the process instance
-            process = new Process();
-
-            // Run program in cmd shell to redirect stderr to stdout
-            process.StartInfo.FileName = "cmd";
-            string[] args = { "/c", wrapped };
-            // Add any parameters we've been given
-            args = args.Concat(Environment.GetCommandLineArgs().Skip(1)).ToArray();
-            // Add redirect
-            args = args.Append("2>&1").ToArray();
-            process.StartInfo.Arguments = string.Join(" ", args);
-
-            // Redirect the standard output and error streams
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-            process.EnableRaisingEvents = true;
-
-            // Set up event handler for capturing output
-            process.OutputDataReceived += Process_OutputDataReceived;
-
-            // Start the process
-            process.Start();
-
-            // Start asynchronous reading of the output stream
-            process.BeginOutputReadLine();
-
-            // Ask to be notified when wrapped program exits
-            process.Exited += Process_Exited;
-        }
-
-        private void Process_Exited(object sender, EventArgs e)
-        {
-            UpdateOutputTextBox($"[Proces beëindigd met code {process.ExitCode}.]");
-            this.BeginInvoke((MethodInvoker) delegate() { this.Text += " [Gereed]"; });
+            Run();
         }
 
         private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
@@ -91,6 +56,54 @@ namespace Wrapper
             process.Close();
         }
 
+        private void Process_Exited(object sender, EventArgs e)
+        {
+            UpdateOutputTextBox($"[Proces beëindigd met code {process.ExitCode}.]");
+            this.BeginInvoke((MethodInvoker)delegate () 
+            { 
+                this.Text = $"{wrapped} [Gereed]";
+                this.btnRerun.Enabled = true;
+            });
+        }
+
+        private void Run()
+        {
+            /// Prevent simultaneous runs
+            this.btnRerun.Enabled = false;
+            /// Reset for subsequent runs (if any)
+            this.Text = wrapped;
+
+            // Create the process instance
+            process = new Process();
+
+            // Run program in cmd shell to redirect stderr to stdout
+            process.StartInfo.FileName = "cmd";
+            string[] args = { "/c", wrapped };
+            // Add any parameters we've been given
+            args = args.Concat(Environment.GetCommandLineArgs().Skip(1)).ToArray();
+            // Add redirect
+            args = args.Append("2>&1").ToArray();
+            process.StartInfo.Arguments = string.Join(" ", args);
+
+            // Redirect the standard output and error streams
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.CreateNoWindow = true;
+            process.EnableRaisingEvents = true;
+
+            // Set up event handler for capturing output
+            process.OutputDataReceived += Process_OutputDataReceived;
+
+            // Start the process
+            process.Start();
+
+            // Start asynchronous reading of the output stream
+            process.BeginOutputReadLine();
+
+            // Ask to be notified when wrapped program exits
+            process.Exited += Process_Exited;
+        }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -99,6 +112,12 @@ namespace Wrapper
         private void btnCopy_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(txtOutput.Text);
+        }
+
+        private void btnRerun_Click(object sender, EventArgs e)
+        {
+            this.txtOutput.Clear();
+            Run();
         }
     }
 }

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.txtOutput = new System.Windows.Forms.TextBox();
-            this.panel = new System.Windows.Forms.Panel();
-            this.btnClose = new System.Windows.Forms.Button();
+            this.panel = new System.Windows.Forms.TableLayoutPanel();
             this.btnCopy = new System.Windows.Forms.Button();
-            this.lblSpacer = new System.Windows.Forms.Label();
+            this.btnRerun = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.panel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,36 +54,29 @@
             // 
             // panel
             // 
-            this.panel.BackColor = System.Drawing.Color.Transparent;
-            this.panel.Controls.Add(this.btnClose);
-            this.panel.Controls.Add(this.lblSpacer);
-            this.panel.Controls.Add(this.btnCopy);
+            this.panel.ColumnCount = 1;
+            this.panel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.panel.Controls.Add(this.btnCopy, 0, 0);
+            this.panel.Controls.Add(this.btnRerun, 0, 1);
+            this.panel.Controls.Add(this.btnClose, 0, 2);
             this.panel.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel.Location = new System.Drawing.Point(674, 8);
-            this.panel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 5);
+            this.panel.Margin = new System.Windows.Forms.Padding(0);
             this.panel.Name = "panel";
             this.panel.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
+            this.panel.RowCount = 3;
+            this.panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.panel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.panel.Size = new System.Drawing.Size(100, 551);
-            this.panel.TabIndex = 0;
-            // 
-            // btnClose
-            // 
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnClose.Location = new System.Drawing.Point(8, 44);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(92, 38);
-            this.btnClose.TabIndex = 2;
-            this.btnClose.Text = "Sluiten";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.panel.TabIndex = 4;
             // 
             // btnCopy
             // 
             this.btnCopy.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnCopy.Location = new System.Drawing.Point(8, 0);
-            this.btnCopy.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCopy.Margin = new System.Windows.Forms.Padding(0);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(92, 38);
             this.btnCopy.TabIndex = 1;
@@ -91,16 +84,31 @@
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
-            // lblSpacer
+            // btnRerun
             // 
-            this.lblSpacer.AutoSize = true;
-            this.lblSpacer.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblSpacer.Font = new System.Drawing.Font("Segoe UI", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblSpacer.Location = new System.Drawing.Point(8, 38);
-            this.lblSpacer.Name = "lblSpacer";
-            this.lblSpacer.Size = new System.Drawing.Size(4, 6);
-            this.lblSpacer.TabIndex = 3;
-            this.lblSpacer.Text = " ";
+            this.btnRerun.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnRerun.Enabled = false;
+            this.btnRerun.Location = new System.Drawing.Point(8, 50);
+            this.btnRerun.Margin = new System.Windows.Forms.Padding(0);
+            this.btnRerun.Name = "btnRerun";
+            this.btnRerun.Size = new System.Drawing.Size(92, 38);
+            this.btnRerun.TabIndex = 2;
+            this.btnRerun.Text = "Opnieuw";
+            this.btnRerun.UseVisualStyleBackColor = true;
+            this.btnRerun.Click += new System.EventHandler(this.btnRerun_Click);
+            // 
+            // btnClose
+            // 
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnClose.Location = new System.Drawing.Point(8, 100);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(0);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(92, 38);
+            this.btnClose.TabIndex = 3;
+            this.btnClose.Text = "Sluiten";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // MainForm
             // 
@@ -112,7 +120,7 @@
             this.Controls.Add(this.txtOutput);
             this.Controls.Add(this.panel);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(234, 128);
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(8);
@@ -120,7 +128,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel.ResumeLayout(false);
-            this.panel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -128,10 +135,10 @@
 
         #endregion
         private System.Windows.Forms.TextBox txtOutput;
-        private System.Windows.Forms.Panel panel;
+        private System.Windows.Forms.TableLayoutPanel panel;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnCopy;
-        private System.Windows.Forms.Label lblSpacer;
+        private System.Windows.Forms.Button btnRerun;
     }
 }
 
